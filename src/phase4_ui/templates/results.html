@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Recommendations - AI Recommender</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="results-page">
+    <div class="glass-container results-wrapper">
+        <header class="app-header small">
+            <h1 class="gradient-text">Top Recommendations</h1>
+            <p class="subtitle">Personalized for you</p>
+        </header>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="preferences-summary">
+            <h3>Your Filters</h3>
+            <ul class="tags-list">
+                {% if preferences.location %}<li><span class="tag label">Loc:</span> <span class="tag value">{{ preferences.location }}</span></li>{% endif %}
+                {% if preferences.budget %}<li><span class="tag label">Budget:</span> <span class="tag value">{{ preferences.budget|title }}</span></li>{% endif %}
+                {% if preferences.cuisine %}<li><span class="tag label">Cuisine:</span> <span class="tag value">{{ preferences.cuisine }}</span></li>{% endif %}
+                {% if preferences.min_rating > 0 %}<li><span class="tag label">Min Rating:</span> <span class="tag value">{{ preferences.min_rating }} ⭐</span></li>{% endif %}
+            </ul>
+        </div>
+
+        <main class="recommendations-container">
+            {% if result and result.has_results %}
+                
+                <div class="ai-badge {% if result.is_ai_powered %}ai-active{% else %}fallback-active{% endif %}">
+                    {% if result.is_ai_powered %}
+                        ✨ Powered by AI 
+                        <span class="llm-info">({{ result.llm_provider|title }} : {{ result.llm_model }}) - {{ result.latency_ms }}ms</span>
+                    {% else %}
+                        ⚙️ Rule-based Ranking (AI Unavailable)
+                    {% endif %}
+                </div>
+
+                <div class="cards-grid">
+                    {% for rec in result.recommendations %}
+                    <div class="rec-card fade-in" style="animation-delay: {{ loop.index0 * 0.1 }}s">
+                        <div class="card-header">
+                            <span class="rank-badge">#{{ rec.rank }}</span>
+                            <h2>{{ rec.name }}</h2>
+                        </div>
+                        <div class="card-meta">
+                            <span class="meta-item rating">⭐ {{ rec.rating }}</span>
+                            <span class="meta-item cost">₹{{ rec.cost_for_two }} for two</span>
+                        </div>
+                        <div class="card-cuisine">{{ rec.cuisine }}</div>
+                        <div class="card-explanation">
+                            <p><strong>{% if result.is_ai_powered %}AI Insight:{% else %}Why we recommend this:{% endif %}</strong></p>
+                            <p>{{ rec.explanation }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-results">
+                    <h2>No matches found.</h2>
+                    <p>Try relaxing your filters to discover more options.</p>
+                </div>
+            {% endif %}
+        </main>
+
+        <div class="action-footer">
+            <a href="{{ url_for('index') }}" class="secondary-btn">← Modify Search</a>
+        </div>
+    </div>
+</body>
+</html>

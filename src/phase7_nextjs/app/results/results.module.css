@@ -1,0 +1,162 @@
+.dark {
+  --page-bg: #111827;
+  --text-primary: #f9fafb;
+  --text-muted: #9ca3af;
+  --chip-bg: rgba(99,102,241,0.12);
+  --chip-border: rgba(99,102,241,0.25);
+  --chip-text: #c7d2fe;
+  --chip-label: #94a3b8;
+  --glow-color: rgba(99,102,241,0.15);
+}
+
+.light {
+  --page-bg: #f3f4f6;
+  --text-primary: #111827;
+  --text-muted: #6b7280;
+  --chip-bg: rgba(226,55,68,0.08);
+  --chip-border: rgba(226,55,68,0.2);
+  --chip-text: #e23744;
+  --chip-label: #6b7280;
+  --glow-color: rgba(226,55,68,0.08);
+}
+
+.main {
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  position: relative;
+  background: var(--page-bg);
+  transition: background 0.3s ease;
+}
+
+.glowTop {
+  position: fixed;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.wrapper {
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #e23744, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+}
+
+.backBtnTop {
+  background: none;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  color: var(--text-muted);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.backBtnTop:hover {
+  background: rgba(255,255,255,0.1);
+  color: var(--text-primary);
+}
+
+.themeToggle {
+  background: none;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  color: var(--text-muted);
+  padding: 0.4rem 1rem;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.themeToggle:hover {
+  background: #e23744;
+  color: #fff;
+  border-color: #e23744;
+}
+
+/* Filter chips */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.chip {
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  color: var(--chip-text);
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  font-size: 0.88rem;
+}
+
+.chipLabel {
+  color: var(--chip-label);
+  margin-right: 0.3rem;
+}
+
+/* Cards grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.backBtn {
+  background: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.9rem 2rem;
+  border-radius: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.backBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(-4px);
+}
+
+@media (max-width: 600px) {
+  .title { font-size: 1.8rem; }
+  .main { padding: 2rem 1.25rem; }
+  .grid { grid-template-columns: 1fr; }
+}
