@@ -1,25 +1,25 @@
 # Web Framework
-flask==3.1.0
+flask
 
 # Environment Management
-python-dotenv==1.1.0
+python-dotenv
 
 # Data Processing (Phase 1+)
-pandas==2.2.3
+pandas
 
 # Hugging Face Dataset (Phase 1+)
-datasets==3.5.0
+datasets
 
 # Fuzzy Matching (Phase 2+)
-rapidfuzz==3.12.2
+rapidfuzz
 
 # LLM Integration (Phase 3+)
-openai==1.78.0
-google-generativeai==0.8.5
+openai
+google-generativeai
 
 # Utilities
-requests==2.32.3
-groq==0.11.0
+requests
+groq
 fastapi
 uvicorn
-streamlit==1.42.0
+streamlit
