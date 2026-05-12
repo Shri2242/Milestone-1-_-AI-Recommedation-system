@@ -28,8 +28,25 @@ try:
 except Exception:
     pass
 
+from src.phase1_ingestion.preprocessor import load_processed_data, preprocess, save_processed_data
+from src.phase1_ingestion.downloader import get_raw_data
 from src.phase0.utils import validate_preferences
 from src.phase3_recommendation.recommender import get_recommendations
+from src.phase0.config import DATA_DIR
+
+# ── AUTO-DOWNLOAD DATASET ON FIRST RUN ──
+processed_file = DATA_DIR / "processed_zomato.csv"
+if not processed_file.exists():
+    with st.spinner("📥 Downloading restaurant dataset for the first time..."):
+        try:
+            raw = get_raw_data()
+            processed = preprocess(raw)
+            save_processed_data(processed)
+            st.success("✅ Dataset ready! Refresh or submit preferences to continue.")
+            st.stop()
+        except Exception as e:
+            st.error(f"❌ Failed to download dataset: {e}")
+            st.stop()
 
 # ── PAGE CONFIG ──
 st.set_page_config(
