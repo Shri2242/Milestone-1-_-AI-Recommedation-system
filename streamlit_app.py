@@ -234,11 +234,20 @@ st.markdown(
 st.markdown('<h1 class="main-title">🍽 Zomato AI</h1>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">Discover your next favorite meal, powered by AI.</p>', unsafe_allow_html=True)
 
+# ── LOAD AVAILABLE LOCATIONS FOR DROPDOWN ──
+@st.cache_data
+def get_available_locations():
+    df = load_processed_data()
+    cities = sorted(df["city"].dropna().unique().tolist())
+    return cities
+
+available_locations = get_available_locations()
+
 # ── FORM ──
 with st.form("preferences_form"):
     col1, col2 = st.columns(2)
     with col1:
-        location = st.text_input("📍 Location", placeholder="e.g. Indiranagar, Bellandur")
+        location = st.selectbox("📍 Location", options=[""] + available_locations, format_func=lambda x: x if x else "Select a location...")
         budget = st.selectbox(
             "💰 Budget",
             options=["", "low", "medium", "high"],
@@ -265,8 +274,8 @@ with st.form("preferences_form"):
 
 # ── RECOMMENDATION LOGIC ──
 if submitted:
-    if not location.strip():
-        st.warning("Please enter a location to get started.")
+    if not location:
+        st.warning("Please select a location to get started.")
         st.stop()
 
     raw_prefs = {
